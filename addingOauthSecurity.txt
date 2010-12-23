@@ -1,0 +1,95 @@
+Adding OAuth Security to Your Web Application
+
+Obtain consumer key and consumer secret for your application and enter them into connector.properties:
+	1. Log into your domain
+	2. Go to setup (under your user name dropdown)
+	3. Develop->Remote Acces
+	4. Click on your application form the list
+	
+	Note: In order for your application to exist here you must have already deployed it to vmForce. You will have to deploy your application (or a shell of it) without security first so that the application will already be created.
+
+Configure your callback url:
+	In the same place where you obtained your consumer key and secret you’ll see an entry for “Callback URL”. Edit this to match the place where your application is deployed with “/_auth” at the end.
+	
+		Example: https://applicationname.domain.com/_auth
+	
+	Note: this url will have to be secure (https) unless you’re testing locally in which case it can point to http://localhost.
+
+Add the necessary imports to your pom.xml:
+	Spring dependencies
+
+	    <dependency>
+	      <groupId>org.springframework.security</groupId>
+	      <artifactId>spring-security-core</artifactId>
+	      <version>${spring.security.version}</version>
+	      <scope>compile</scope>
+	    </dependency>
+	    <dependency>
+	      <groupId>org.springframework.security</groupId>
+	      <artifactId>spring-security-web</artifactId>
+	      <version>${spring.security.version}</version>
+	      <scope>compile</scope>
+	    </dependency>
+	    <dependency>
+	      <groupId>org.springframework.security</groupId>
+	      <artifactId>spring-security-config</artifactId>
+	      <version>${spring.security.version}</version>
+	    </dependency>
+
+	Salesforce dependency
+
+	    <dependency>
+	      <groupId>com.salesforce.sdk.security</groupId>
+	      <artifactId>oauth</artifactId>
+	      <version>${force.sdk.version}</version>
+	    </dependency>
+	    
+	Optional – needed if using jsp taglibs to control display
+			
+	    <dependency>
+	      <groupId>org.springframework.security</groupId>
+	      <artifactId>spring-security-taglibs</artifactId>
+	      <version>${spring.security.version}</version>
+	    </dependency>
+
+Add the security filter to your web.xml:
+
+	Any requests that could be subject to security (usually all requests or /*) should be sent through org.springframework.web.filter.DelegatingFilterProxy. 
+	
+	Configure as a standard servlet filter:
+
+		  <!-- Enables Spring Security -->
+		  <filter>
+		    <filter-name>springSecurityFilterChain</filter-name>
+		    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+		  </filter>
+		  <filter-mapping>
+		    <filter-name>springSecurityFilterChain</filter-name>
+		    <url-pattern>/*</url-pattern>
+		  </filter-mapping>
+
+Create a spring application context file for the security configuration:
+
+	You're security-config.xml file will configure Spring's security framework to do a number of things:
+		- Enable security and choose which urls will be secured 
+			Standard Spring <security:http> tag
+		- Configure OAuth 
+			Bean definitions for com.salesforce.security.oauth.OAuthConnector, com.salesforce.security.oauth.spring.OAuthAuthenticationProvider and com.salesforce.security.oauth.spring.AuthenticationProcessingFilterEntryPoint. 
+			oauthConnector needs the oauth credentials wired into it.
+			AuthenticationProcessingFilterEntryPoint and OAuthAuthenticationProvider need the oauthConnector bean wired into them.
+		- Set your authentication manager to use OAuth
+		    <bean id="oauthAuthenticationProvider" class="com.salesforce.security.oauth.spring.OAuthAuthenticationProvider">
+		        <property name="oauthConnector" ref="oauthConnector" />
+		    </bean>
+		- Configure authentication filters for login and logout
+			These bean definitions shouldn't change much. See examples in the sample applications.
+			
+	Look at security-config.xml in any of the sample applications that utilize security for examples of a full security configuration. The spring documentation is also an excellent resource for learning the tags needed for configuration>
+
+	Note: It’s important to import the security context into your main application context file. If you maintain a separate context for your Spring MVC configuration (as most of the sample applications do) you can’t include the security context there. It will only be found if it’s imported into your main or root context (<import resource="security-config.xml" />)
+
+
+Useful Resources:
+http://static.springsource.org/spring-security/site/docs/3.0.x/reference/ns-config.html#d0e344
+
+http://oauth.net/documentation/getting-started/
