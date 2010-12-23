@@ -28,7 +28,10 @@ public class BlogController {
 	EntityManager em;
 	
 	/**
-	 * Simply selects the home view to render by returning its name.
+	 * Render main blog page
+	 * 
+	 * @param mv
+	 * @return
 	 */
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public ModelAndView home(ModelAndView mv) {		
@@ -42,6 +45,13 @@ public class BlogController {
 		return mv;
 	}
 
+	/**
+	 * Create a post
+	 * 
+	 * @param title
+	 * @param body
+	 * @return
+	 */
 	@RequestMapping(value="/admin/createPost", method=RequestMethod.POST)
 	public String newPost(@RequestParam("title") String title,
 						@RequestParam("body") String body) {
@@ -51,6 +61,14 @@ public class BlogController {
 		return "redirect:/";
 	}
 	
+	/**
+	 * Comment on a post
+	 * 
+	 * @param postId
+	 * @param name
+	 * @param commentText
+	 * @return
+	 */
 	@RequestMapping(value="/createComment", method=RequestMethod.POST)
 	public String newComment(@RequestParam("postId") String postId,
 							@RequestParam("name") String name,
@@ -62,6 +80,12 @@ public class BlogController {
 		return "redirect:/";
 	}
 	
+	/**
+	 * Delete a comment
+	 * 
+	 * @param commentId
+	 * @return
+	 */
 	@RequestMapping(value="/admin/deleteComment", method=RequestMethod.POST)
 	@Transactional
 	public String deleteComment(@RequestParam("commentId") String commentId) {
@@ -72,6 +96,12 @@ public class BlogController {
 		return "redirect:/";
 	}
 	
+	/**
+	 * Delete a post
+	 * 
+	 * @param postId
+	 * @return
+	 */
 	@RequestMapping(value="/admin/deletePost", method=RequestMethod.POST)
 	@Transactional
 	public String deletePost(@RequestParam("postId") String postId) {
@@ -82,7 +112,13 @@ public class BlogController {
 		return "redirect:/";
 	}
 	
-	
+	/**
+	 * Helper method to create a post
+	 * 
+	 * @param title
+	 * @param body
+	 * @return
+	 */
 	@Transactional
 	private Post createPost(String title, String body) {
 		Post post = new Post();
@@ -92,6 +128,14 @@ public class BlogController {
 		return post;
 	}
 	
+	/**
+	 * Helper method to create a comment
+	 * 
+	 * @param author
+	 * @param body
+	 * @param post
+	 * @return
+	 */
 	@Transactional
 	private Comment createComment(String author, String body, Post post) {
 		Comment comment = new Comment();

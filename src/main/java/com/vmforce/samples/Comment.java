@@ -8,6 +8,12 @@ import javax.persistence.ManyToOne;
 
 import com.salesforce.persistence.datanucleus.annotation.CustomObject;
 
+/**
+ * Entity object representing a comment
+ * 
+ * @author jsimone
+ *
+ */
 @Entity
 @CustomObject(enableFeeds=true)
 public class Comment {

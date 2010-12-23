@@ -10,6 +10,12 @@ import javax.persistence.Transient;
 
 import com.salesforce.persistence.datanucleus.annotation.CustomObject;
 
+/**
+ * Entity object representing a blog post
+ * 
+ * @author jsimone
+ *
+ */
 @Entity
 @CustomObject(enableFeeds=true)
 public class Post {
