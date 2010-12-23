@@ -1,0 +1,15 @@
+# Connection configuration for your VMforce app
+
+force.apiVersion = 20.0
+force.endPoint = https://vmf01.t.salesforce.com
+
+# The consumer key and secret are currently not needed for a plain database application
+# that does not use OAuth login.
+
+force.consumerKey = Copy_consumer_key_from_remote_access_entry_created_in_your_DE_org_to_here
+force.consumerSecret = Copy_consumer_secret_from_remote_access_entry_created_in_your_DE_org_to_here
+
+force.userName = Your_DE_org_username
+
+force.password = Your_DE_org_password
+
