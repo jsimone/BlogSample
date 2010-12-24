@@ -33,7 +33,7 @@ public class BlogController {
 	 * @param mv
 	 * @return
 	 */
-	@RequestMapping(value="/", method=RequestMethod.GET)
+	@RequestMapping(value="/blog.htm", method=RequestMethod.GET)
 	public ModelAndView home(ModelAndView mv) {		
 		List<Post> posts = em.createQuery("SELECT p FROM Post p order by createddate desc").getResultList();		
 		for (Post post : posts) {
@@ -52,13 +52,13 @@ public class BlogController {
 	 * @param body
 	 * @return
 	 */
-	@RequestMapping(value="/admin/createPost", method=RequestMethod.POST)
+	@RequestMapping(value="/createPost.htm", method=RequestMethod.POST)
 	public String newPost(@RequestParam("title") String title,
 						@RequestParam("body") String body) {
 		Post post = createPost(title, body);
 		logger.info("Created post: "+post.getTitle()+" (with id "+post.getId()+")");
 		
-		return "redirect:/";
+		return "redirect:/blog.htm";
 	}
 	
 	/**
@@ -69,7 +69,7 @@ public class BlogController {
 	 * @param commentText
 	 * @return
 	 */
-	@RequestMapping(value="/createComment", method=RequestMethod.POST)
+	@RequestMapping(value="/createComment.htm", method=RequestMethod.POST)
 	public String newComment(@RequestParam("postId") String postId,
 							@RequestParam("name") String name,
 							@RequestParam("comment") String commentText) {
@@ -77,7 +77,7 @@ public class BlogController {
 		Comment comment = createComment(name, commentText, post);
 		logger.info("Created comment by: "+comment.getAuthor()+" (with id "+comment.getId()+")");
 		
-		return "redirect:/";
+		return "redirect:/blog.htm";
 	}
 	
 	/**
@@ -86,14 +86,14 @@ public class BlogController {
 	 * @param commentId
 	 * @return
 	 */
-	@RequestMapping(value="/admin/deleteComment", method=RequestMethod.POST)
+	@RequestMapping(value="/deleteComment.htm", method=RequestMethod.POST)
 	@Transactional
 	public String deleteComment(@RequestParam("commentId") String commentId) {
 		Comment comment = em.find(Comment.class, commentId);
 		em.remove(comment);
 		logger.info("Comment deleted with id "+comment.getId()+")");
 		
-		return "redirect:/";
+		return "redirect:/blog.htm";
 	}
 	
 	/**
@@ -102,14 +102,14 @@ public class BlogController {
 	 * @param postId
 	 * @return
 	 */
-	@RequestMapping(value="/admin/deletePost", method=RequestMethod.POST)
+	@RequestMapping(value="/deletePost.htm", method=RequestMethod.POST)
 	@Transactional
 	public String deletePost(@RequestParam("postId") String postId) {
 		Post post = em.find(Post.class, postId);
 		em.remove(post);
 		logger.info("Post deleted with id "+post.getId()+")");
 		
-		return "redirect:/";
+		return "redirect:/blog.htm";
 	}
 	
 	/**
