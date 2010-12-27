@@ -39,6 +39,17 @@ height:73px;
 background-image:url('../img/SF-Footer.gif');
 }
 
+#post {
+border-top-style:solid;
+}
+
+#comment {
+border-style:solid;
+border-width:1px;
+padding:10px;
+font-size:75%;
+}
+
 #nav hr  { display: none; }
 
 #nav ul  { 

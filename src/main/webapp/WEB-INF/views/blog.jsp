@@ -35,32 +35,39 @@
 			</form>
 		</sec:authorize>
 		<c:forEach items="${posts}" var="post">
-			<h2>${post.title}</h2> 
-			${post.body}<br/><br/>
-			<sec:authorize access="hasRole('ROLE_USER')">	
-				<form action="deletePost.htm" method="POST">
-					<input type="hidden" name="postId" value="${post.id}"/>
-					<input type="submit" name="Delete Post" value="Delete Post"/>
-				</form>
-			</sec:authorize>	
-			<h3>Comments:</h3>
-			<c:forEach items="${post.comments}" var="comment">
-				Comment by: ${comment.author} <br/>
-				${comment.body}<br/><br/>
-				<sec:authorize access="hasRole('ROLE_USER')">
-					<form action="deleteComment.htm" method="POST">
-						<input type="hidden" name="commentId" value="${comment.id}"/>
-						<input type="submit" name="Delete Comment" value="Delete Comment"/>
+			<div id="post">
+				<h2>${post.title}</h2> 
+				${post.body}<br/><br/>
+				<sec:authorize access="hasRole('ROLE_USER')">	
+					<form action="deletePost.htm" method="POST">
+						<input type="hidden" name="postId" value="${post.id}"/>
+						<input type="submit" name="Delete Post" value="Delete Post"/>
 					</form>
-				</sec:authorize>
-			</c:forEach>
-				
-			<form action="createComment.htm" method="POST">
-				Name: <input type="text" name="name"/><br/>
-				Comment: <textarea name="comment"></textarea><br/>
-				<input type="hidden" name="postId" value="${post.id}"/>
-				<input type="submit" name="New Comment" value="New Comment"/>
-			</form>
+				</sec:authorize>	
+				<div id="comments">
+					<h3>Comments:</h3>
+					<c:forEach items="${post.comments}" var="comment">
+						<div id="comment">
+							Comment by: ${comment.author} <br/>
+							${comment.body}<br/><br/>
+						</div>
+						<sec:authorize access="hasRole('ROLE_USER')">
+							<form action="deleteComment.htm" method="POST">
+								<input type="hidden" name="commentId" value="${comment.id}"/>
+								<input type="submit" name="Delete Comment" value="Delete Comment"/>
+							</form>
+						</sec:authorize>
+					</c:forEach>
+						
+					<h4>Make a new comment:</h4>
+					<form action="createComment.htm" method="POST">
+						Name: <input type="text" name="name"/><br/>
+						Comment: <textarea name="comment"></textarea><br/>
+						<input type="hidden" name="postId" value="${post.id}"/>
+						<input type="submit" name="New Comment" value="New Comment"/>
+					</form>
+				</div>
+			</div>
 		</c:forEach>
 	</div>
 </div>
