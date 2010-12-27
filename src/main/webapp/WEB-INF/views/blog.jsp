@@ -9,9 +9,6 @@
 
 <body> 
 <div id="header">
-	<h1>
-		vmForce Blog
-	</h1>
 </div>
 
 <div id="main">
@@ -66,6 +63,9 @@
 			</form>
 		</c:forEach>
 	</div>
+</div>
+
+<div id="footer">
 </div>
 </body>
 </html>
