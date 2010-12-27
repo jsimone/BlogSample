@@ -1,0 +1,50 @@
+body {
+width:800px;
+margin:0 auto;
+margin-top:30px;
+}
+
+#header  {
+width: 800px;
+height: 148px;
+background-image:url('../img/SF-Header.gif');
+}
+
+#main {
+width: 800px;
+overflow:auto;
+height:auto !important;
+background-color:#008EC0;
+}
+
+#content { 
+width:625px;
+height:inherit;
+background-image:url('../img/SF-fullslice.gif');
+background-repeat:repeat-y;
+padding:20px;
+padding-right:60px;
+}
+
+#nav {
+width: 120px;
+float: right;
+height:inherit;
+background-color:#008EC0;
+}
+
+#footer {
+width:800px;
+height:73px;
+background-image:url('../img/SF-Footer.gif');
+}
+
+#nav hr  { display: none; }
+
+#nav ul  { 
+margin: 0 0 0 1em;
+padding: 0;
+list-style-type:none;
+}
+
+#nav li  { margin: 0; padding: 0; }
