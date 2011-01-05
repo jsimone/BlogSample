@@ -9,7 +9,7 @@
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>
 		<java-version>1.6</java-version>
-	    <force.sdk.version>20.0.1-SNAPSHOT</force.sdk.version>
+	    <force.sdk.version>20.0.0</force.sdk.version>
 	    <force.metadataapi.version>${force.sdk.version}</force.metadataapi.version>
 	    <force.partnerapi.version>${force.sdk.version}</force.partnerapi.version>
 	    <force.wsc.version>${force.sdk.version}</force.wsc.version>
@@ -133,26 +133,26 @@
 		<!--  VMForce -->
 
 	<dependency>
-		<groupId>com.salesforce.sdk.persistence</groupId>
-		<artifactId>datanucleus-sfdc</artifactId>
-		<version>20.0.1-SNAPSHOT</version>
+		<groupId>com.force.sdk</groupId>
+		<artifactId>force-jpa</artifactId>
+		<version>${force.sdk.version}</version>
 	</dependency>
 	<dependency>
 		<groupId>org.datanucleus</groupId>
 		<artifactId>datanucleus-core</artifactId>
-		<version>2.1.0-release</version>
+		<version>2.1.1</version>
 		<scope>runtime</scope>
 	</dependency>
 	<dependency>
 		<groupId>org.datanucleus</groupId>
 		<artifactId>datanucleus-enhancer</artifactId>
-		<version>2.1.0-release</version>
+		<version>2.1.1</version>
 		<scope>runtime</scope>
 	</dependency>
 	<dependency>
 		<groupId>org.datanucleus</groupId>
 		<artifactId>datanucleus-jpa</artifactId>
-		<version>2.1.0-release</version>
+		<version>2.1.1</version>
 		<scope>runtime</scope>
 	</dependency>
 	<dependency>
@@ -174,11 +174,16 @@
 	
 	<!-- Needed for security with oauth -->
     <dependency>
-      <groupId>com.salesforce.sdk.security</groupId>
-      <artifactId>oauth</artifactId>
+      <groupId>com.force.sdk</groupId>
+      <artifactId>force-oauth</artifactId>
       <version>${force.sdk.version}</version>
     </dependency>
-	
+    <dependency>
+      <groupId>com.force.sdk</groupId>
+      <artifactId>force-springsecurity</artifactId>
+      <version>${force.sdk.version}</version>
+    </dependency>
+    	
     <dependency>
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-core</artifactId>

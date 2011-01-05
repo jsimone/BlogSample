@@ -2,13 +2,9 @@ package com.vmforce.samples;
 
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
-import com.salesforce.persistence.datanucleus.annotation.CustomObject;
+import com.force.sdk.jpa.annotation.CustomObject;
 
 /**
  * Entity object representing a blog post
@@ -28,7 +24,7 @@ public class Post {
     
     private String body;
     
-    @Transient
+    @OneToMany(mappedBy="post", fetch=FetchType.EAGER)
     private List<Comment> comments;
 
 	public String getId() {

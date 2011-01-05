@@ -3,17 +3,13 @@ package com.vmforce.samples;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -27,7 +23,11 @@ public class BlogController {
 	@PersistenceContext
 	EntityManager em;
 	
-	/**
+	public void setEm(EntityManager em) {
+        this.em = em;
+    }
+
+    /**
 	 * Render main blog page
 	 * 
 	 * @param mv
@@ -36,9 +36,6 @@ public class BlogController {
 	@RequestMapping(value="/blog.htm", method=RequestMethod.GET)
 	public ModelAndView home(ModelAndView mv) {		
 		List<Post> posts = em.createQuery("SELECT p FROM Post p order by createddate desc").getResultList();		
-		for (Post post : posts) {
-			PostToCommentFix.popluateComments(em, post);
-		}
 		
 		mv.addObject("posts", posts);
 		mv.setViewName("blog");

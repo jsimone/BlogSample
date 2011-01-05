@@ -13,11 +13,11 @@
         <security:authentication-provider ref="oauthAuthenticationProvider"/>
     </security:authentication-manager>
         
-    <bean id="oauthAuthenticationProvider" class="com.salesforce.security.oauth.spring.OAuthAuthenticationProvider">
+    <bean id="oauthAuthenticationProvider" class="com.force.sdk.springsecurity.OAuthAuthenticationProvider">
         <property name="oauthConnector" ref="oauthConnector" />
     </bean>
     
-    <bean id="oauthConnector" class="com.salesforce.security.oauth.OAuthConnector">
+    <bean id="oauthConnector" class="com.force.sdk.oauth.OAuthConnector">
         <property name="apiVersion" value = "${force.apiVersion}" />
         <property name="endPoint" value="${force.endPoint}" />
         <property name="consumerKey" value="${force.consumerKey}" />
@@ -25,15 +25,15 @@
     </bean>
     
     <!--  This filter redirects the user to the OAuth login page -->
-    <bean id="authenticationProcessingFilterEntryPoint" class="com.salesforce.security.oauth.spring.AuthenticationProcessingFilterEntryPoint">
+    <bean id="authenticationProcessingFilterEntryPoint" class="com.force.sdk.springsecurity.AuthenticationProcessingFilterEntryPoint">
         <property name="oauthConnector" ref="oauthConnector" />
     </bean>
     
     <!-- This filter is invoked after OAuth login to exchange token for an access token -->
-    <bean id="authenticationFilter" class="com.salesforce.security.oauth.spring.AuthenticationProcessingFilter">
+    <bean id="authenticationFilter" class="com.force.sdk.springsecurity.AuthenticationProcessingFilter">
         <property name="authenticationManager" ref="authenticationManager" />
         <property name="authenticationSuccessHandler">
-            <bean class="com.salesforce.security.oauth.spring.AuthenticationSuccessHandler">
+            <bean class="com.force.sdk.springsecurity.AuthenticationSuccessHandler">
 			    <property name="defaultTargetUrl" value="/blog.htm" />
 	        </bean>
 	    </property>
@@ -46,7 +46,7 @@
     <!-- sets this as the authentication filter over the default -->
     <bean id="logoutFilter" class="org.springframework.security.web.authentication.logout.LogoutFilter">
         <constructor-arg index="0">
-            <bean class="com.salesforce.security.oauth.spring.LogoutSuccessHandler">
+            <bean class="com.force.sdk.springsecurity.LogoutSuccessHandler">
                 <property name="defaultTargetUrl" value="/blog.htm" />
                 <property name="logoutFromSfdc" value="true" />
                 <property name="oauthConnector" ref="oauthConnector" />
@@ -54,7 +54,7 @@
         </constructor-arg>
         <constructor-arg index="1">
             <list>
-                <bean class="com.salesforce.security.oauth.spring.LogoutHandler"/>
+                <bean class="com.force.sdk.springsecurity.LogoutHandler"/>
                 <bean class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler"/>
             </list>
         </constructor-arg>

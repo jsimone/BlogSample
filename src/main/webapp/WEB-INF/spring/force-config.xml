@@ -28,7 +28,7 @@
 
     <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
 
- 	<bean id="forceService" class="com.salesforce.connector.SFDCServiceConnector">
+ 	<bean id="forceService" class="com.force.sdk.connector.ForceServiceConnector">
     	<property name="sfdcConnectionName" value="JPAConfiguredConnection"/>
     </bean>
 

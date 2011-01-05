@@ -36,11 +36,16 @@ Add the necessary imports to your pom.xml:
 	      <version>${spring.security.version}</version>
 	    </dependency>
 
-	Salesforce dependency
+	Salesforce dependencies
 
 	    <dependency>
-	      <groupId>com.salesforce.sdk.security</groupId>
-	      <artifactId>oauth</artifactId>
+	      <groupId>com.force.sdk</groupId>
+	      <artifactId>force-oauth</artifactId>
+	      <version>${force.sdk.version}</version>
+	    </dependency>
+	    <dependency>
+	      <groupId>com.force.sdk</groupId>
+	      <artifactId>force-springsecurity</artifactId>
 	      <version>${force.sdk.version}</version>
 	    </dependency>
 	    

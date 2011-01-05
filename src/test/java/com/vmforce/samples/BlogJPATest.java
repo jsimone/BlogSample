@@ -1,24 +1,20 @@
 package com.vmforce.samples;
 
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import javax.persistence.*;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 public class BlogJPATest {
 
 	private EntityManager em;
 	
 	private String postTitle = "JPA unit Test Post Title";
+	private String postBody300Long = "This is a long post This is a long post This is a long post This is a long post This is a long post This is a long post This is a long post This is a long post This is a long post This is a long post This is a long post This is a long post This is a long post This is a long post This is a long post ";
 	private String postId;
 	private String commentAuthor = "Author";
 	private String commentBody = "This is my comment";
@@ -79,6 +75,28 @@ public class BlogJPATest {
 		assertEquals(commentAuthor, comment.getAuthor());
 		assertEquals(commentBody, comment.getBody());
 	}
+	
+	@Test
+	public void testSaveLongPostBody() throws Exception {
+        EntityTransaction tx = em.getTransaction();
+        try {
+            tx.begin();
+            Post post = new Post();
+            post.setTitle(postTitle);
+            post.setBody(postBody300Long);
+            
+            em.persist(post);
+            em.flush();
+            tx.commit();
+            assertTrue("Should not have reached this statement because an exception should be thrown", false);
+        } catch(PersistenceException e) {
+            assertEquals("body__c: data value too large:", e.getMessage().substring(0, 30));
+        } finally {
+            if(tx.isActive()) {
+                tx.rollback();
+            }
+        }
+	}
 
 	@Test
 	public void testRetrievePostByTitle() throws Exception {
@@ -120,8 +138,6 @@ public class BlogJPATest {
 	
 		Post post = em.find(Post.class, postId);
 		
-		//remove this when @OneToMany works
-		PostToCommentFix.popluateComments(em, post);
 		List<Comment> comments = post.getComments();
 		
 		assertEquals(1, comments.size());

@@ -1,12 +1,8 @@
 package com.vmforce.samples;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
-import com.salesforce.persistence.datanucleus.annotation.CustomObject;
+import com.force.sdk.jpa.annotation.CustomObject;
 
 /**
  * Entity object representing a comment
