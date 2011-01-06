@@ -2,7 +2,9 @@ package com.vmforce.samples;
 
 import javax.persistence.*;
 
+import com.force.sdk.jpa.annotation.CustomField;
 import com.force.sdk.jpa.annotation.CustomObject;
+import com.sforce.soap.metadata.FieldType;
 
 /**
  * Entity object representing a comment
@@ -23,6 +25,7 @@ public class Comment {
     private String body;
     
 	@ManyToOne
+	@CustomField(type=FieldType.MasterDetail)
     private Post post;
 
 	public String getId() {

@@ -31,9 +31,11 @@ public class BlogJPATest {
 			Post post = new Post();
 			post.setTitle(postTitle);
 			
-			em.persist(post);
-	
-			em.flush();
+			em.persist(post);			
+			tx.commit();
+			
+			tx = em.getTransaction();
+			tx.begin();
 			
 			Comment comment = new Comment();
 			
@@ -42,12 +44,10 @@ public class BlogJPATest {
 			comment.setPost(post);
 			
 			em.persist(comment);
-			em.flush();
 			tx.commit();
 			
 			postId = post.getId();
 			commentId = comment.getId();
-			
 			
 		}
 		finally {
