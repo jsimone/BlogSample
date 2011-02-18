@@ -3,6 +3,7 @@ package com.vmforce.samples;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
 
 import org.slf4j.Logger;
@@ -76,7 +77,7 @@ public class BlogController {
 		
 		return "redirect:/blog.htm";
 	}
-	
+		
 	/**
 	 * Delete a comment
 	 * 

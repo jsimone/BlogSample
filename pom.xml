@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
@@ -9,13 +8,14 @@
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>
 		<java-version>1.6</java-version>
-	    <force.sdk.version>20.0.0</force.sdk.version>
-	    <force.metadataapi.version>${force.sdk.version}</force.metadataapi.version>
-	    <force.partnerapi.version>${force.sdk.version}</force.partnerapi.version>
-	    <force.wsc.version>${force.sdk.version}</force.wsc.version>
+		<force.sdk.version>21.0.0-SNAPSHOT</force.sdk.version>
+		<force.metadataapi.version>${force.sdk.version}</force.metadataapi.version>
+		<force.partnerapi.version>${force.sdk.version}</force.partnerapi.version>
+		<force.wsc.version>${force.sdk.version}</force.wsc.version>
 		<org.springframework-version>3.0.4.RELEASE</org.springframework-version>
 		<org.springframework.roo-version>1.0.2.RELEASE</org.springframework.roo-version>
-    	<spring.security.version>3.0.3.RELEASE</spring.security.version>
+		<spring.security.version>3.0.3.RELEASE</spring.security.version>
+		<datanucleus.enhancer.version>2.1.0-release</datanucleus.enhancer.version>
 		<org.aspectj-version>1.6.9</org.aspectj-version>
 		<org.slf4j-version>1.5.10</org.slf4j-version>
 	</properties>
@@ -30,7 +30,7 @@
 				<exclusion>
 					<groupId>commons-logging</groupId>
 					<artifactId>commons-logging</artifactId>
-				 </exclusion>
+				</exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
@@ -45,14 +45,14 @@
 			<version>${org.springframework.roo-version}</version>
 			<scope>provided</scope>
 		</dependency>
-				
+
 		<!-- AspectJ -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
 			<version>${org.aspectj-version}</version>
-		</dependency>	
-		
+		</dependency>
+
 		<!-- Logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -102,7 +102,7 @@
 			<artifactId>javax.inject</artifactId>
 			<version>1</version>
 		</dependency>
-				
+
 		<!-- Servlet -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -121,7 +121,7 @@
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
-	
+
 		<!-- Test -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -129,109 +129,121 @@
 			<version>4.7</version>
 			<scope>test</scope>
 		</dependency>
-        
-		<!--  VMForce -->
 
-	<dependency>
-		<groupId>com.force.sdk</groupId>
-		<artifactId>force-jpa</artifactId>
-		<version>${force.sdk.version}</version>
-	</dependency>
-	<dependency>
-		<groupId>org.datanucleus</groupId>
-		<artifactId>datanucleus-core</artifactId>
-		<version>2.1.1</version>
-		<scope>runtime</scope>
-	</dependency>
-	<dependency>
-		<groupId>org.datanucleus</groupId>
-		<artifactId>datanucleus-enhancer</artifactId>
-		<version>2.1.1</version>
-		<scope>runtime</scope>
-	</dependency>
-	<dependency>
-		<groupId>org.datanucleus</groupId>
-		<artifactId>datanucleus-jpa</artifactId>
-		<version>2.1.1</version>
-		<scope>runtime</scope>
-	</dependency>
-	<dependency>
-		<groupId>org.springframework</groupId>
-		<artifactId>spring-tx</artifactId>
-		<version>${org.springframework-version}</version>
-	</dependency>
-	<dependency>
-		<groupId>org.springframework</groupId>
-		<artifactId>spring-orm</artifactId>
-		<version>${org.springframework-version}</version>
-		<scope>runtime</scope>
-	</dependency>
-	<dependency>
-		<groupId>cglib</groupId>
-		<artifactId>cglib</artifactId>
-		<version>2.2</version>
-	</dependency>
-	
-	<!-- Needed for security with oauth -->
-    <dependency>
-      <groupId>com.force.sdk</groupId>
-      <artifactId>force-oauth</artifactId>
-      <version>${force.sdk.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.force.sdk</groupId>
-      <artifactId>force-springsecurity</artifactId>
-      <version>${force.sdk.version}</version>
-    </dependency>
-    	
-    <dependency>
-      <groupId>org.springframework.security</groupId>
-      <artifactId>spring-security-core</artifactId>
-      <version>${spring.security.version}</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.security</groupId>
-      <artifactId>spring-security-web</artifactId>
-      <version>${spring.security.version}</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.security</groupId>
-      <artifactId>spring-security-config</artifactId>
-      <version>${spring.security.version}</version>
-    </dependency>
-    
-    <!-- Taglibs are only needed if using jsp tags to control the display based on logged in status -->
-    <dependency>
-      <groupId>org.springframework.security</groupId>
-      <artifactId>spring-security-taglibs</artifactId>
-      <version>${spring.security.version}</version>
-    </dependency>
-	<!-- /Needed for security with oauth -->
-    
+		<!-- VMForce -->
+
+		<dependency>
+			<groupId>com.force.sdk</groupId>
+			<artifactId>force-jpa</artifactId>
+			<version>${force.sdk.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.datanucleus</groupId>
+			<artifactId>datanucleus-core</artifactId>
+			<version>2.1.1</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.datanucleus</groupId>
+			<artifactId>datanucleus-enhancer</artifactId>
+			<version>2.1.1</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.datanucleus</groupId>
+			<artifactId>datanucleus-jpa</artifactId>
+			<version>2.1.1</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${org.springframework-version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+			<version>2.2</version>
+		</dependency>
+
+		<!-- Needed for security with oauth -->
+		<dependency>
+			<groupId>com.force.sdk</groupId>
+			<artifactId>force-oauth</artifactId>
+			<version>${force.sdk.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.force.sdk</groupId>
+			<artifactId>force-springsecurity</artifactId>
+			<version>${force.sdk.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>${spring.security.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${spring.security.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+
+		<!-- Taglibs are only needed if using jsp tags to control the display based 
+			on logged in status -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-taglibs</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+		<!-- /Needed for security with oauth -->
+
 	</dependencies>
 	<repositories>
-	    <!--  VMforce repository (temporary location)` -->
-	    <repository>
-			<id>com.force.maven.snapshot</id>
-			<name>Force.com Maven Repo</name>
-			<url>http://repo.t.salesforce.com/archiva/repository/snapshots</url>
-		</repository>
+		<!-- VMforce repository (temporary location)` -->
+        <repository>
+            <id>force.repo</id>
+            <name>Force.com Repository</name>
+            <url>http://repo.t.salesforce.com/archiva/repository/releases</url>
+        </repository>
+        <repository>
+            <id>force.repo.snapshot</id>
+            <name>Force.com Snapshot Repository</name>
+            <url>http://repo.t.salesforce.com/archiva/repository/snapshots</url>
+        </repository>
 		<!-- For testing against latest Spring snapshots -->
 		<repository>
 			<id>org.springframework.maven.snapshot</id>
 			<name>Spring Maven Snapshot Repository</name>
 			<url>http://maven.springframework.org/snapshot</url>
-			<releases><enabled>false</enabled></releases>
-			<snapshots><enabled>true</enabled></snapshots>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
 		</repository>
 		<!-- For developing against latest Spring milestones -->
 		<repository>
 			<id>org.springframework.maven.milestone</id>
 			<name>Spring Maven Milestone Repository</name>
 			<url>http://maven.springframework.org/milestone</url>
-			<snapshots><enabled>false</enabled></snapshots>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
 		</repository>
 	</repositories>
 	<pluginRepositories>
@@ -241,25 +253,25 @@
 		</pluginRepository>
 	</pluginRepositories>
 	<build>
-	    <filters>
-	        <filter>${basedir}/src/main/resources/connector.properties</filter>
-	    </filters>
-	    
-	    <resources>
-	      <resource>
-	        <directory>${basedir}/src/main/resources</directory>
-	        <filtering>true</filtering>
-	        <includes>
-	          <include>**/persistence.xml</include>
-	        </includes>
-	      </resource>
-	      <resource>
-	        <directory>${basedir}/src/main/resources</directory>
-	        <includes>
-	          <include>connector.properties</include>
-	        </includes>
-	      </resource>
-	    </resources>
+		<filters>
+			<filter>${basedir}/src/main/resources/connector.properties</filter>
+		</filters>
+
+		<resources>
+			<resource>
+				<directory>${basedir}/src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>**/persistence.xml</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>${basedir}/src/main/resources</directory>
+				<includes>
+					<include>connector.properties</include>
+				</includes>
+			</resource>
+		</resources>
 
 		<plugins>
 			<plugin>
@@ -293,7 +305,8 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>aspectj-maven-plugin</artifactId>
-				<!-- Have to use version 1.2 since version 1.3 does not appear to work with ITDs -->
+				<!-- Have to use version 1.2 since version 1.3 does not appear to work 
+					with ITDs -->
 				<version>1.2</version>
 				<dependencies>
 					<!-- You must use Maven 2.0.9 or above or these are ignored (see MNG-2972) -->
@@ -336,23 +349,52 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>tomcat-maven-plugin</artifactId>
 				<version>1.0-beta-1</version>
-			</plugin>						
+			</plugin>
 			<plugin>
-			  <groupId>org.datanucleus</groupId>
-			  <artifactId>maven-datanucleus-plugin</artifactId>
-			  <version>2.1.0-release</version>
-			  <configuration>
-			    <api>JPA</api>
-			    <verbose>true</verbose>
-			  </configuration>
-			  <executions>
-			    <execution>
-			      <phase>process-classes</phase>
-			      <goals>
-			        <goal>enhance</goal>
-			      </goals>
-			    </execution>
-			  </executions>
+				<groupId>org.datanucleus</groupId>
+				<artifactId>maven-datanucleus-plugin</artifactId>
+                    <version>${datanucleus.enhancer.version}</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.datanucleus</groupId>
+                            <artifactId>datanucleus-core</artifactId>
+                            <version>${datanucleus.enhancer.version}</version>
+                            <scope>runtime</scope>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.datanucleus</groupId>
+                            <artifactId>datanucleus-enhancer</artifactId>
+                            <version>${datanucleus.enhancer.version}</version>
+                            <scope>runtime</scope>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.datanucleus</groupId>
+                            <artifactId>datanucleus-rdbms</artifactId>
+                            <version>${datanucleus.enhancer.version}</version>
+                            <scope>runtime</scope>
+                            <optional>true</optional>
+                        </dependency>
+
+                        <dependency>
+                            <groupId>org.datanucleus</groupId>
+                            <artifactId>datanucleus-jpa</artifactId>
+                            <version>${datanucleus.enhancer.version}</version>
+                            <scope>runtime</scope>
+                            <optional>true</optional>
+                        </dependency>
+                    </dependencies>
+				<configuration>
+					<api>JPA</api>
+					<verbose>true</verbose>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>process-classes</phase>
+						<goals>
+							<goal>enhance</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

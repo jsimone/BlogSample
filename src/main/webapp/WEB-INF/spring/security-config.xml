@@ -2,64 +2,21 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:fss="http://www.salesforce.com/schema/springsecurity"
        xsi:schemaLocation="
            http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
            http://www.springframework.org/schema/security
-           http://www.springframework.org/schema/security/spring-security-3.0.xsd">
+           http://www.springframework.org/schema/security/spring-security-3.0.xsd           
+           http://www.salesforce.com/schema/springsecurity
+           http://jsimone-ws:8070/vmforce-admin/css/force-springsecurity-1.0.xsd">
 
     <!-- Force.com OAuth security config -->
-    <security:authentication-manager alias="authenticationManager">
-        <security:authentication-provider ref="oauthAuthenticationProvider"/>
-    </security:authentication-manager>
+    <fss:oauth default-login-success="/login_success.html" default-logout-success="/blog.htm"
+        login-url="/login" logout-url="/logout" logout-from-force-dot-com="true">
         
-    <bean id="oauthAuthenticationProvider" class="com.force.sdk.springsecurity.OAuthAuthenticationProvider">
-        <property name="oauthConnector" ref="oauthConnector" />
-    </bean>
-    
-    <bean id="oauthConnector" class="com.force.sdk.oauth.OAuthConnector">
-        <property name="apiVersion" value = "${force.apiVersion}" />
-        <property name="endPoint" value="${force.endPoint}" />
-        <property name="consumerKey" value="${force.consumerKey}" />
-        <property name="consumerSecret" value="${force.consumerSecret}" />
-    </bean>
-    
-    <!--  This filter redirects the user to the OAuth login page -->
-    <bean id="authenticationProcessingFilterEntryPoint" class="com.force.sdk.springsecurity.AuthenticationProcessingFilterEntryPoint">
-        <property name="oauthConnector" ref="oauthConnector" />
-    </bean>
-    
-    <!-- This filter is invoked after OAuth login to exchange token for an access token -->
-    <bean id="authenticationFilter" class="com.force.sdk.springsecurity.AuthenticationProcessingFilter">
-        <property name="authenticationManager" ref="authenticationManager" />
-        <property name="authenticationSuccessHandler">
-            <bean class="com.force.sdk.springsecurity.AuthenticationSuccessHandler">
-			    <property name="defaultTargetUrl" value="/blog.htm" />
-	        </bean>
-	    </property>
-	    <property name="oauthConnector" ref="oauthConnector" />
-	    <property name="filterProcessesUrl" value="/login" />
-	    <property name="authenticationEntryPoint" ref="authenticationProcessingFilterEntryPoint" />
-    </bean>
-    
-    <!-- This filter is invoked during logout -->
-    <!-- sets this as the authentication filter over the default -->
-    <bean id="logoutFilter" class="org.springframework.security.web.authentication.logout.LogoutFilter">
-        <constructor-arg index="0">
-            <bean class="com.force.sdk.springsecurity.LogoutSuccessHandler">
-                <property name="defaultTargetUrl" value="/blog.htm" />
-                <property name="logoutFromSfdc" value="true" />
-                <property name="oauthConnector" ref="oauthConnector" />
-            </bean>
-        </constructor-arg>
-        <constructor-arg index="1">
-            <list>
-                <bean class="com.force.sdk.springsecurity.LogoutHandler"/>
-                <bean class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler"/>
-            </list>
-        </constructor-arg>
-        <property name="filterProcessesUrl" value="/logout" />
-    </bean>
+        <fss:connectionUrl url="force://vmf01.t.salesforce.com;oauth_key=3MVG9lKcPoNINVBLf7B4iVthZLaQ_mgNJFMgCYEDwW4.n6EaXOalPXw5kptwtx3QA6v3cvY0fSxw9Q7b0Zdub;oauth_secret=3826685588983197770"/>
+    </fss:oauth>
        
 	<!-- Configure Spring Security -->
 	<!-- use-expressions and hasRole only needed if jsp tags are used. 
@@ -67,11 +24,8 @@
 	<security:http entry-point-ref="authenticationProcessingFilterEntryPoint" use-expressions="true">
 	    <security:anonymous />
 	    <security:intercept-url pattern="/createPost.htm" access="hasRole('ROLE_USER')" />
-	    <security:intercept-url pattern="/deletePost.htm" access="hasRole('ROLE_USER')" />
+	   	<security:intercept-url pattern="/deletePost.htm" access="hasRole('ROLE_USER')" />
 	    <security:intercept-url pattern="/deleteComment.htm" access="hasRole('ROLE_USER')" />
-	    <!-- sets this as the authentication filter over the default -->
-	    <security:custom-filter position="FORM_LOGIN_FILTER" ref="authenticationFilter"/>
-	    <security:custom-filter position="LOGOUT_FILTER" ref="logoutFilter"/>
 	</security:http>
 
 </beans>
